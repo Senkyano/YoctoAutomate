@@ -1,0 +1,23 @@
+services:
+  own_yocto:
+    build: .
+    container_name: ${CONTAINER_NAME}
+    volumes:
+      - ${PROJECT_PATH}:/home/userspace/project_yocto:rw
+      - ./yocto-downloads:/home/userspace/downloads:rw
+      - ./yocto-sstate:/home/userspace/sstate-cache:rw
+    shm_size: ${SHM_SIZE}
+    deploy:
+      resources:
+        limits:
+          memory: ${MEM_LIMIT}
+    devices:
+      - /dev/kvm:/dev/kvm
+    environment:
+      - USER_ID=${MY_USER_ID}
+      - GROUP_ID=${MY_GROUP_ID}
+      - LANG=en_US.UTF-8
+    ports:
+      - ${PORT_ACCESS}:22
+    stdin_open: true
+    tty: true

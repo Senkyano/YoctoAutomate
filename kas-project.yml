@@ -1,0 +1,45 @@
+header:
+  version: 14 # Version format
+
+# what type machine
+machine:
+
+distro: poky
+
+repos:
+  poky:
+    url: "https://git.yoctoproject.org/git/poky"
+    refspec: kirkstone
+    layers:
+      meta:
+      meta-poky:
+      meta-yocto-bsp:
+  
+  meta-openembedded:
+    url: "https://git.openembedded.org/meta-openembedded"
+    refspec: kirkstone
+    layers:
+      meta-oe:
+      meta-python:
+      meta-networking:
+
+# different layers
+  # exemple:
+  #     url: "path"
+  #     refspec:
+  #     layers:
+  #       meta-oe:
+  #       meta-python:
+  #       meta-networking:
+
+# Configuration local.conf
+local_conf_header:
+  standar: |
+    CONF_VERSION = "2"
+    # Optimisation of build
+    INHERIT += "rm_work"
+    PACKAGECONFIG:append:pn-qemu-system-native = " sdl"
+
+# target by default
+target:
+  - core-image-minimal
